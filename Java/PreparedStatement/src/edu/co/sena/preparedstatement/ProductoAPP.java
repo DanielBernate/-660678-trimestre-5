@@ -179,17 +179,17 @@ public class ProductoAPP {
         }
     }
 
-    private void BuscarDatos(ProductoDTO producto) throws SQLException {
+    private ProductoDTO buscarDatos(ProductoDTO producto) throws SQLException {
         ProductoDTO prodcutoTemporal = new ProductoDTO();
         ResultSet rs = null;
-        String sql4 = "SELECT * FROM tiendaenlinea.producto where idProducto = ? ;";
+        String sql4 = "SELECT * FROM tiendaenlinea.producto WHERE idProducto= ? ;";
         System.out.println(sql4);
         try {
             conexion = DriverManager.getConnection(url);
             System.out.println("Se conecto a mysql");
             sentencia = conexion.prepareStatement(sql4);
             sentencia.setString(1, producto.getIdProdcuto());
-            rs = sentencia.executeQuery(sql4);
+            rs = sentencia.executeQuery();
                   if (rs.next() == true) {
                 rs.beforeFirst();
                 while (rs.next() == true) {
@@ -200,6 +200,7 @@ public class ProductoAPP {
                    prodcutoTemporal.setDescripcion(rs.getString("descripcion"));
                    prodcutoTemporal.setMaterial(rs.getString("material"));
                    prodcutoTemporal.setColor(rs.getString("color"));
+                   prodcutoTemporal.setCantidad(rs.getInt("cantidad"));
                    prodcutoTemporal.setActivo(rs.getShort("activo"));
                    prodcutoTemporal.setPrecioUnitario(rs.getFloat("precioUnitario"));
                    prodcutoTemporal.setDescuento(rs.getFloat("descuento"));
@@ -210,13 +211,7 @@ public class ProductoAPP {
            
             }
 
-            int resultado = sentencia.executeUpdate();
-            if (resultado > 0) {
-                System.out.println("se busco " + resultado);
-            } else {
-                System.out.println("Se selecciono");
-            }
-
+          
 //            
         } catch (SQLException e) {
             System.err.println("error: " + e.toString());
@@ -231,6 +226,7 @@ public class ProductoAPP {
                 System.out.println("Se cerro la conexion  correctamente");
             }
         }
+        return prodcutoTemporal;
     }
 
     public static void main(String[] args) throws SQLException {
@@ -238,37 +234,39 @@ public class ProductoAPP {
         ProductoDTO prod1 = new ProductoDTO();
         ProductoAPP app = new ProductoAPP();
         prod1.setIdProdcuto("123");
-//        prod1.setNombre("Bateria");
-//        prod1.setMarca("Jazz");
-//        prod1.setReferencia("Fs1234");
-//        prod1.setDescripcion("Es una bateria de tipo de buena percusion");
-//        prod1.setMaterial("koa");
-//        prod1.setColor("Verde");
-//        prod1.setCantidad(5);
-//        prod1.setActivo(new Short("1"));
-//        prod1.setPrecioUnitario(1300000);
-//        prod1.setDescuento(0);
-//        prod1.setCategoriaIdCategoria(7);
-//        prod1.setCatalogoIdCatalogo(1);
-//        app.insertarProducto(prod1);
+        prod1.setNombre("Bateria");
+        prod1.setMarca("Jazz");
+        prod1.setReferencia("Fs1234");
+        prod1.setDescripcion("Es una bateria de tipo de buena percusion");
+        prod1.setMaterial("koa");
+        prod1.setColor("Verde");
+        prod1.setCantidad(5);
+        prod1.setActivo(new Short("1"));
+        prod1.setPrecioUnitario(1300000);
+        prod1.setDescuento(0);
+        prod1.setCategoriaIdCategoria(7);
+        prod1.setCatalogoIdCatalogo(1);
+        app.insertarProducto(prod1);
         System.out.println("_________________________");
-//        prod1.setNombre("Saxofon");
-//        prod1.setMarca("Yamaha");
-//        prod1.setReferencia("125");
-//        prod1.setDescripcion("Es un saxofon reconocido mundial mente");
-//        prod1.setMaterial("Metal");
-//        prod1.setColor("Plateado");
-//        prod1.setCantidad(2);
-//        prod1.setActivo(new Short("1"));
-//        prod1.setPrecioUnitario(120000);
-//        prod1.setDescuento(0);
-//        prod1.setCategoriaIdCategoria(7);
-//        prod1.setCatalogoIdCatalogo(1);
-//        app.actualizarProducto(prod1);
+        prod1.setNombre("Saxofon");
+        prod1.setMarca("Yamaha");
+        prod1.setReferencia("125");
+        prod1.setDescripcion("Es un saxofon reconocido mundial mente");
+        prod1.setMaterial("Metal");
+        prod1.setColor("Plateado");
+        prod1.setCantidad(2);
+        prod1.setActivo(new Short("1"));
+        prod1.setPrecioUnitario(120000);
+        prod1.setDescuento(0);
+        prod1.setCategoriaIdCategoria(7);
+        prod1.setCatalogoIdCatalogo(1);
+        app.actualizarProducto(prod1);
         System.out.println("__________________");
         app.eliminarProducto(prod1);
         System.out.println("______________");
-         app.BuscarDatos(prod1);
+        ProductoDTO pruductoBusq = app.buscarDatos(prod1);
+        System.out.println(pruductoBusq.toString());
+      
     }
 
 }
