@@ -9,7 +9,7 @@ package edu.co.sena;
  *
  * @author ColsutecR
  */
-public class ItemDTO {
+public class ItemDTO implements java.io.Serializable{
     private String nombre;
     private int cantidad;
     private double costoUnitario;
