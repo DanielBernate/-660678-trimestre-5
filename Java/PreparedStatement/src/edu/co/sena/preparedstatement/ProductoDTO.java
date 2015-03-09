@@ -9,7 +9,7 @@ package edu.co.sena.preparedstatement;
  *
  * @author ColsutecR
  */
-public class ProductoDTO {
+public class ProductoDTO implements  java.io.Serializable {
     private String idProdcuto;
     private String nombre;
     private String marca;

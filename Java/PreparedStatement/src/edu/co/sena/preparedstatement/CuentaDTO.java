@@ -9,7 +9,7 @@ package edu.co.sena.preparedstatement;
  *
  * @author ColsutecR
  */
-public class CuentaDTO {
+public class CuentaDTO implements java.io.Serializable{
     private String tipoDocumento;
     private String numeroDocumento;
     private String primerNombre;
